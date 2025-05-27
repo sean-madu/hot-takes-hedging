@@ -166,7 +166,10 @@ Think creatively and contextually. Do not limit yourself to only what is explici
     
 #TODO: error handling    
 def lambda_handler(event, context):
-    generated_summary = generateNews(["News,", "Canada,", " Space Exploration,", "Leisure,"])
+    # TODO: when we save in the cloud, we need to handle search terms better
+    # General idea is to save any new generated search terms to use for the next one
+    # but will always search with these terms as a baseline
+    generated_summary = generateNews(["News,", "Politics,", "Companies,", "Interesting, "])
     news_summary = generated_summary["summary"]
     search_results = generated_summary["search_results"]
     generated_advice = generateAdvice(news_summary)
