@@ -1,4 +1,6 @@
 import os
+import json
+    
 from google import genai
 from google.genai import types
 
@@ -152,13 +154,6 @@ Think creatively and contextually. Do not limit yourself to only what is explici
             },
         ),
     )
-
-    for chunk in client.models.generate_content_stream(
-        model=model,
-        contents=contents,
-        config=generate_content_config,
-    ):
-        print(chunk.text, end="")
     
     response = client.models.generate_content(
         model=model,
@@ -166,9 +161,12 @@ Think creatively and contextually. Do not limit yourself to only what is explici
         config=generate_content_config,
     )
     
+    advice = ""
     for each in response.candidates[0].content.parts:
-        print(each.text)
-
+        advice += each.text
+    
+    return json.load(advice)
+    
         
 def lambda_handler(event, context):
     generateAdvice(generateNews(["China", "AI", "EU", "Mark Carney"]))
