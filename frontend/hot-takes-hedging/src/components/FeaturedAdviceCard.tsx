@@ -216,7 +216,7 @@ const FeaturedAdviceCard: React.FC<FeaturedAdviceCardProps> = ({ advice }) => {
                 )}
             </GlassCard>
             {/*// TODO: Make this better with sharing a specific one once we have the backend working */}
-            <ShareRow url="google.com" title={`Why AI thinks you should ${advice['Strategic Recommendation']} ${advice['Ticker Symbol/Asset Name']}`}/>
+            <ShareRow url="google.com" title={`AI thinks you should ${advice['Strategic Recommendation']} ${advice['Ticker Symbol/Asset Name']}`}/>
         </Stack>
     );
 };

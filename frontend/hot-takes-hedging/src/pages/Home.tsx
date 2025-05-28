@@ -18,7 +18,7 @@ import Carousel from '../components/Carousel';
 
 // This is just test data in real life, it will load 5 at a time then load the next 5 when they scroll to the bottom
 // and so on.. TODO:  Adding in that loading only 5 feature
-import latestData from '../test/latest.json';
+import latestJson from '../test/latest.json';
 import j2 from '../test/2.json';
 import j3 from '../test/3.json';
 import j4 from '../test/4.json';
@@ -32,8 +32,8 @@ import type { InvestmentAdvice } from '../types'; // Sometimes useful for debugg
 
 // TODO: Add a nice gradient so the glasst effect looks better
 const Home: React.FC = () => {
-    const advice = [latestData, j2, j3, j4, j5, j6, j7]
-
+    const advice = [latestJson, j2, j3, j4, j5, j6, j7]
+    const latestData = advice[0]
     const summaryCards = latestData["Investment Advice"].map((item, index) => (
         <AdviceSummaryCard key={index} advice={item} />
     ));
@@ -61,7 +61,7 @@ const Home: React.FC = () => {
                     fontSize: { xs: '1rem', md: '1.25rem' }, 
                     padding: { xs: '8px 12px', md: '16px 24px' } 
                 }}>
-                    This is <b>NOT</b> financial advice see the full disclaimer on our{" "}
+                    This is <b>NOT</b> financial advice, it is 1000% AI made, see the full disclaimer on our{" "}
                     <Link href="/about" underline="hover">
                         about page here
                     </Link>
