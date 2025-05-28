@@ -13,6 +13,7 @@ import GlassCard from "./GlassCard";
 import type { InvestmentAdviceItem } from "../types";
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ShareRow from "./ShareRow";
 
 type FeaturedAdviceCardProps = {
     advice: InvestmentAdviceItem;
@@ -59,7 +60,7 @@ const FeaturedAdviceCard: React.FC<FeaturedAdviceCardProps> = ({ advice }) => {
     const votePercent = totalVotes > 0 ? (upvotes / totalVotes) * 100 : 50;
 
     return (
-        <Box
+        <Stack
             sx={{
                 maxWidth: { sm: '100%', md: 800 },
                 m: "auto",
@@ -214,7 +215,9 @@ const FeaturedAdviceCard: React.FC<FeaturedAdviceCardProps> = ({ advice }) => {
                     </>
                 )}
             </GlassCard>
-        </Box >
+            {/*// TODO: Make this better with sharing a specific one once we have the backend working */}
+            <ShareRow url="google.com" title={`Why AI thinks you should ${advice['Strategic Recommendation']} ${advice['Ticker Symbol/Asset Name']}`}/>
+        </Stack>
     );
 };
 
