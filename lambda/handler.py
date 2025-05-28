@@ -91,7 +91,7 @@ Add a confidence score from 0 to 10 representing how strong the recommendation i
 
 Include a brief rationale that reflects nuanced reasoning consider ripple effects, public sentiment, policy shifts, or broader market context.
 
-If the result is to watch, suggest a max of 3 relevant future search terms to track connections to the advice. The terms should be interesting or non obvious connections, they should not just be search terms to follow the exact story
+If the result is to watch, suggest a max of 2 relevant future search terms to track connections to the advice. The terms should be interesting or non obvious connections, they should not just be search terms to follow the exact story
 If selling or buying an asset say what amount to sell or buy
 Think creatively and contextually. Do not limit yourself to only what is explicitly stated infer connections, make sure to include connections or effects humans might struggle to understand, consider potential chain reactions, and think like a strategic investor."""),
             ],
