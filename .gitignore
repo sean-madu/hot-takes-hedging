@@ -1,3 +1,5 @@
 .env
 /lambda_package
+/lambda/package/
+/lambda/package.zip
 /frontend/hot-takes-hedging/src/test

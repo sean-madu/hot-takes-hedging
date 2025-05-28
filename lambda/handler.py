@@ -1,6 +1,8 @@
 import os
 import json
-    
+from datetime import datetime
+import boto3
+
 from google import genai
 from google.genai import types
 
@@ -28,7 +30,7 @@ def generateNews(keywords=[]):
             parts=[
                 types.Part.from_text(text=f"""You are an expert news summarizer.
 
-Please provide a clear and concise summary of the most important news from the past hour related to the following topics: {"".join(keywords)}
+Please provide a clear and concise summary of the most important news from the past hour related to the following topics: {",".join(keywords)}
  and one random topic of your choice, topic should be unrelated to the other topics
 
 The summary should cover any significant events or developments for each keyword, including politics, technology, business, culture, public sentiment or any relevant area.
@@ -162,23 +164,62 @@ Think creatively and contextually. Do not limit yourself to only what is explici
     for each in response.candidates[0].content.parts:
         advice += each.text
     
+    json_advice = json.loads(advice)
+    for (key, value) in json_advice:
+        pass
+    # if the key is search_terms save the value to an array for future searhcing
+    # then return {Jsonadvice: terms}, use advice to make json object for s3
+    # then sure search terms in a thing like latest.json to have an updated future search
+    # term
     return advice
     
 #TODO: error handling    
 def lambda_handler(event, context):
-    # TODO: when we save in the cloud, we need to handle search terms better
-    # General idea is to save any new generated search terms to use for the next one
-    # but will always search with these terms as a baseline
-    generated_summary = generateNews(["News,", "Politics,", "Companies,", "Interesting, "])
+    
+    # TODO: So over here pull search terms from s3 and add them to list
+    generated_summary = generateNews(["News", "Politics", "Companies", "Interesting"])
     news_summary = generated_summary["summary"]
     search_results = generated_summary["search_results"]
     generated_advice = generateAdvice(news_summary)
-    print(news_summary)
-    print("=========")
-    print(generated_advice)
-    print("=========")
-    print(search_results)
-    print("=========")
+    
+    # Prepare final output
+    output_data = json.loads(generated_advice)
+    output_data['summary'] = news_summary
+    output_data['searches'] = search_results
+
+    # output_data = {
+    #     "Investment Advice": json.loads(generated_advice),
+    #     "summary": news_summary,
+    #     "searches": search_results
+    # }
+
+    # Prepare timestamp and filenames
+    timestamp = datetime.utcnow().isoformat(timespec="seconds") + "Z"
+    filename = f"{timestamp}.json"
+    folder_prefix = "news_insights/"
+    bucket_name = os.environ.get("S3_BUCKET_NAME")
+
+    s3 = boto3.client("s3")
+
+    # Save timestamped version
+    s3.put_object(
+        Bucket=bucket_name,
+        Key=folder_prefix + filename,
+        Body=json.dumps(output_data, indent=2),
+        ContentType="application/json"
+    )
+
+    # Save/update latest.json
+    s3.put_object(
+        Bucket=bucket_name,
+        Key=folder_prefix + "latest.json",
+        Body=json.dumps(output_data, indent=2),
+        ContentType="application/json"
+    )
+
+    print(f"Saved historical JSON as {filename}")
+    print("Updated latest.json")
+
     
 if __name__ == "__main__":
     lambda_handler({}, {})
