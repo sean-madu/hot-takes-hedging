@@ -13,8 +13,7 @@ type CarouselProps = {
     items: React.ReactNode[];
 };
 
-// TODO: Make this smaller and have space for the news summary too, 
-// on mobile make the height of things bigger actually since it wont have as much width to expand into
+// TODO: on mobile make the height of things bigger actually since it wont have as much width to expand into
 // But make the carousel medium instead of large
 // ALso make things wider with more padding
 const SwipeableCarousel: React.FC<CarouselProps> = ({ items }) => {

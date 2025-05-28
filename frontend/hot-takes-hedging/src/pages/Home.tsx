@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
+import parse from 'html-react-parser';
 
-import { Typography, Alert, Box, Link, Stack, Divider, } from '@mui/material';
+import { Typography, Alert, Box, Link, Stack } from '@mui/material';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -12,6 +13,8 @@ import FeaturedAdviceCard from '../components/FeaturedAdviceCard';
 import AdviceSummaryCard from '../components/AdviceSummaryCard';
 import Ticker from '../components/Ticker';
 import Carousel from '../components/Carousel';
+
+
 
 // This is just test data in real life, it will load 5 at a time then load the next 5 when they scroll to the bottom
 // and so on.. TODO:  Adding in that loading only 5 feature
@@ -79,7 +82,9 @@ const Home: React.FC = () => {
                                         <FeaturedAdviceCard key={cardIndex} advice={item} />
                                     ))
                                     : []; // Provide an empty array if "Investment Advice" is missing or not an array
-
+                                
+                                    // I wanna sanitze this but it messes up the styling and google was very specific
+                                const rawHtmlString = dataItem["searches"] ? dataItem["searches"] : '';
                                 return (
                                     <div key={stackIndex}>
                                         {/* TODO: Extract title from Date it was posted*/}
@@ -87,7 +92,7 @@ const Home: React.FC = () => {
                                             borderColor="divider"
                                             borderRadius={2}
                                             p={3}
-                                            >
+                                        >
                                             <Accordion defaultExpanded={stackIndex === 0}>
                                                 <AccordionSummary
                                                     expandIcon={<ExpandMoreIcon />}
@@ -97,10 +102,16 @@ const Home: React.FC = () => {
                                                     <Typography component="span" fontWeight={'bold'}>NEWS USED FOR THIS PREDICTION</Typography>
                                                 </AccordionSummary>
                                                 <AccordionDetails>
-                                                    <ReactMarkdown>
-                                                        {dataItem['summary']}
-                                                    </ReactMarkdown>
+                                                    <Stack>
+                                                        <ReactMarkdown>
+                                                            {dataItem['summary']}
+                                                        </ReactMarkdown>
+                                                        <div className="search-results-html-container">
+                                                            {parse(rawHtmlString)}
+                                                        </div>
+                                                    </Stack>
                                                 </AccordionDetails>
+
                                             </Accordion>
                                             <Carousel items={adviceCards} />
 
