@@ -13,12 +13,9 @@ type CarouselProps = {
     items: React.ReactNode[];
 };
 
-// TODO: on mobile make the height of things bigger actually since it wont have as much width to expand into
-// But make the carousel medium instead of large
-// ALso make things wider with more padding
 const SwipeableCarousel: React.FC<CarouselProps> = ({ items }) => {
     const theme = useTheme();
-    //const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [direction, setDirection] = useState<'left' | 'right'>('left');
@@ -36,10 +33,10 @@ const SwipeableCarousel: React.FC<CarouselProps> = ({ items }) => {
     const swipeHandlers = useSwipeable({
         onSwipedLeft: handleNext,
         onSwipedRight: handlePrev,
-        trackMouse: true,
-        delta: 10, 
+        trackMouse: false,
+        delta: 10,
         trackTouch: true,
-        touchEventOptions: { passive: false }, 
+        touchEventOptions: { passive: false },
     });
 
     return (
@@ -49,8 +46,12 @@ const SwipeableCarousel: React.FC<CarouselProps> = ({ items }) => {
                 alignItems="center"
                 justifyContent="center"
                 spacing={2}
-                sx={{ width: '100%', flexWrap: 'nowrap', animation: 'height ease 0.3s' }}
-
+                sx={{
+                    width: '100%',
+                    flexWrap: 'nowrap',
+                    animation: 'height ease 0.3s',
+                    p: { xs: 1, sm: 2 }
+                }}
             >
                 <Box
                     {...swipeHandlers}
@@ -58,11 +59,23 @@ const SwipeableCarousel: React.FC<CarouselProps> = ({ items }) => {
                         width: '100%',
                         maxWidth: '100%',
                         position: 'relative',
-                        overflow: 'hidden',
+                        overflowX: 'hidden',
+                        overflowY: 'auto',
+
                         display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        height: "90vh",
+                        flexDirection: 'column',
+                        height: { xs: '70vh', sm: '85vh' },
+                        p: { xs: 1, sm: 0 }, 
+
+                        // WebKit-based browsers (Chrome, Safari, Edge, newer Firefox)
+                        '&::-webkit-scrollbar-track': {
+                            background: 'transparent', // Make the scrollbar track invisible
+                        },
+
+                        // None webkits
+                        scrollbarWidth: 'thin', // 'auto' | 'thin' | 'none'
+                        scrollbarColor: 'rgba(0, 0, 0, 0.3) transparent', // thumb color track color
+
                     }}
                 >
                     <Slide
@@ -76,10 +89,11 @@ const SwipeableCarousel: React.FC<CarouselProps> = ({ items }) => {
                         <Box
                             sx={{
                                 width: '100%',
-                                position: 'relative', // was 'absolute'
+                                position: 'relative',
                                 display: 'flex',
                                 justifyContent: 'center',
                                 alignItems: 'center',
+                                px: { xs: 2, sm: 0 }
                             }}
                         >
                             {items[currentIndex]}
@@ -87,21 +101,18 @@ const SwipeableCarousel: React.FC<CarouselProps> = ({ items }) => {
                     </Slide>
                 </Box>
                 <Pagination
-                    count={items.length}             
-                    page={currentIndex + 1}           
+                    count={items.length}
+                    page={currentIndex + 1}
                     onChange={(_, value) => {
                         setCurrentIndex(value - 1);
                     }}
                     color="primary"
                     shape="rounded"
-                    size="large"
-                    sx={{padding: 1}}
+                    size={isMobile ? "medium" : "large"}
+                    sx={{ padding: 1 }}
                 />
-
-
             </Stack>
         </>
-
     );
 };
 

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import parse from 'html-react-parser';
 
-import { Typography, Alert, Box, Link, Stack } from '@mui/material';
+import { Typography, Alert, Box, Link, Stack, Divider } from '@mui/material';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -40,18 +40,30 @@ const Home: React.FC = () => {
 
     return (
         <>
-            <Box alignItems={'center'} m={2}>
-                <Typography variant="h2" fontWeight={'bold'} gutterBottom textAlign="center">
+            <Box
+                alignItems={'center'}
+                sx={{
+                    m: { xs: 1, md: 2 },
+                    p: 0
+                }}
+            >
+                <Typography
+                    variant="h2"
+                    fontWeight={'bold'}
+                    gutterBottom
+                    textAlign="center"
+                    sx={{ fontSize: { xs: '2.5rem', md: '3.75rem' } }}
+                >
                     HEDGE YOUR BETS!
                 </Typography>
                 <Alert severity='error' sx={{
                     mb: 2,
-                    fontSize: '1.25rem',
-                    padding: '16px 24px'
+                    fontSize: { xs: '1rem', md: '1.25rem' }, 
+                    padding: { xs: '8px 12px', md: '16px 24px' } 
                 }}>
-                    This is <b>NOT</b> financial advice  see the full disclaimer on our{" "}
+                    This is <b>NOT</b> financial advice see the full disclaimer on our{" "}
                     <Link href="/about" underline="hover">
-                        about page
+                        about page here
                     </Link>
                     .
                     Take it more as an exercise to see how many things you can spot wrong
@@ -61,7 +73,7 @@ const Home: React.FC = () => {
             {
                 latestData ?
                     <Stack alignItems={'center'} width={'100vw'} spacing={1}>
-                        <Typography> LAST UPDATE AT A GLANCE</Typography>
+                        <Typography sx={{ fontSize: { xs: '0.8rem', md: '1rem' } }}> LAST UPDATE AT A GLANCE | NEXT UPDATE IN 00:30</Typography>
                         <Ticker items={summaryCards} speed={80} />
                     </Stack> :
                     <Typography textAlign="center" color="textSecondary">
@@ -70,7 +82,7 @@ const Home: React.FC = () => {
             }
 
 
-            <Box sx={{ maxWidth: 800, m: "auto", p: 2, width: "90vw" }}>
+            <Box sx={{ maxWidth: { xs: '95vw', md: 800 }, m: "auto", p: { xs: 1, md: 2 } }}> {/* Adjust max width and padding */}
 
                 {advice.length !== 0 ? (
                     <>
@@ -82,40 +94,65 @@ const Home: React.FC = () => {
                                         <FeaturedAdviceCard key={cardIndex} advice={item} />
                                     ))
                                     : []; // Provide an empty array if "Investment Advice" is missing or not an array
-                                
-                                    // I wanna sanitze this but it messes up the styling and google was very specific
+
+                                // I wanna sanitze this but it messes up the styling and google was very specific
                                 const rawHtmlString = dataItem["searches"] ? dataItem["searches"] : '';
                                 return (
                                     <div key={stackIndex}>
                                         {/* TODO: Extract title from Date it was posted*/}
-                                        <Box border={1}
+                                        <Stack border={1}
                                             borderColor="divider"
                                             borderRadius={2}
-                                            p={3}
+                                            sx={{
+                                                p: { md: 1, lg: 2 }, 
+                                            }}
                                         >
-                                            <Accordion defaultExpanded={stackIndex === 0}>
-                                                <AccordionSummary
-                                                    expandIcon={<ExpandMoreIcon />}
-                                                    aria-controls="panel1-content"
-                                                    id="panel1-header"
-                                                >
-                                                    <Typography component="span" fontWeight={'bold'}>NEWS USED FOR THIS PREDICTION</Typography>
-                                                </AccordionSummary>
-                                                <AccordionDetails>
-                                                    <Stack>
-                                                        <ReactMarkdown>
-                                                            {dataItem['summary']}
-                                                        </ReactMarkdown>
-                                                        <div className="search-results-html-container">
-                                                            {parse(rawHtmlString)}
-                                                        </div>
-                                                    </Stack>
-                                                </AccordionDetails>
+                                            <Box
+                                                sx={{
+                                                    p: { xs: 2, md: 3 },
+                                                    mb: { xs: 2, sm: 2, md: 0 }
+                                                }}>
+                                                <Accordion defaultExpanded={stackIndex === 0}>
+                                                    <AccordionSummary
+                                                        expandIcon={<ExpandMoreIcon />}
+                                                        aria-controls="panel1-content"
+                                                        id="panel1-header"
+                                                    >
+                                                        <Typography component="span" fontWeight={'bold'} sx={{ fontSize: { xs: '0.9rem', md: '1rem' } }}>NEWS USED FOR THIS PREDICTION</Typography>
+                                                    </AccordionSummary>
 
-                                            </Accordion>
+                                                    <Divider />
+                                                    <AccordionDetails sx={{
+                                                        maxHeight: "50vh",
+                                                        overflow: 'auto',
+                                                        // WebKit-based browsers (Chrome, Safari, Edge, newer Firefox)
+                                                        '&::-webkit-scrollbar-track': {
+                                                            background: 'transparent', // Make the scrollbar track invisible
+                                                        },
+    
+                                                        // None webkits
+                                                        scrollbarWidth: 'thin', // 'auto' | 'thin' | 'none'
+                                                        scrollbarColor: 'rgba(0, 0, 0, 0.3) transparent', // thumb color track color
+                                                        
+                                                    }}>
+                                                        <Stack>
+
+                                                            <ReactMarkdown>
+                                                                {dataItem['summary']}
+                                                            </ReactMarkdown>
+                                                            <div className="search-results-html-container">
+                                                                {parse(rawHtmlString)}
+                                                            </div>
+                                                        </Stack>
+                                                    </AccordionDetails>
+
+                                                </Accordion>
+
+                                            </Box>
+
                                             <Carousel items={adviceCards} />
 
-                                        </Box>
+                                        </Stack>
 
                                     </div>
                                 );

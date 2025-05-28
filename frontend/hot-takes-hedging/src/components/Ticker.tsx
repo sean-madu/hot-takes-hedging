@@ -40,9 +40,6 @@ const Ticker: React.FC<TickerProps> = ({ items, speed = 50 }) => {
           animation: animationDuration
             ? `ticker-scroll ${animationDuration}s linear infinite`
             : 'none',
-          '&:hover': {
-            animationPlayState: 'paused',
-          },
         }}
       >
         {/* Duplicate the items twice */}

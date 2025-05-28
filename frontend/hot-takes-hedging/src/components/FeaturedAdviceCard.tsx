@@ -50,7 +50,7 @@ const riskColor = (risk: string) => {
 const FeaturedAdviceCard: React.FC<FeaturedAdviceCardProps> = ({ advice }) => {
     const [showRationale, setShowRationale] = useState(true);
 
-    // Mock user feedback vote state, TODO: Implement toggle once this is actuallu coded 
+    // Mock user feedback vote state, TODO: Implement toggle once this is actually coded
     const [isLiked, setIsLiked] = useState<null | boolean>(null);
     const [upvotes, setUpvotes] = useState(6);
     const [downvotes, setDownvotes] = useState(4);
@@ -59,33 +59,57 @@ const FeaturedAdviceCard: React.FC<FeaturedAdviceCardProps> = ({ advice }) => {
     const votePercent = totalVotes > 0 ? (upvotes / totalVotes) * 100 : 50;
 
     return (
-        <Box sx={{ maxWidth: 800, m: "auto", p: 2, width: "90vw" }}>
+        <Box
+            sx={{
+                maxWidth: { sm: '100%', md: 800 },
+                m: "auto",
+                p: { sm: 0, lg: 2 }, 
+            }}
+        >
             <GlassCard>
                 <Stack spacing={2}>
-                    <Typography variant="h4" textAlign="center" fontWeight="bold">
+                    <Typography
+                        variant="h4"
+                        textAlign="center"
+                        fontWeight="bold"
+                        sx={{ fontSize: { xs: '1.5rem', sm: '2.125rem' } }} 
+                    >
                         {advice["Ticker Symbol/Asset Name"]} —{" "}
                         <Typography
                             component="span"
                             color={recommendationColor(advice["Strategic Recommendation"])}
                             fontWeight="bold"
-                            sx={{ textTransform: "uppercase" }}
+                            sx={{ textTransform: "uppercase", fontSize: { xs: '1.5rem', sm: '2.125rem' } }}
                         >
                             {advice["Strategic Recommendation"]}
                         </Typography>
                     </Typography>
 
-                    <Stack direction="column" spacing={1}>
-                        <Stack direction="row" spacing={2} justifyContent="center">
-
-                                {/*I know its wrong but I dont want to spend time fixing this right now, commit already way too big TODO */}
-                            <Button variant={(isLiked === null || !isLiked) ? "outlined" : "contained"} onClick={() => { if (isLiked === true) { setIsLiked(null); setUpvotes(v => v - 1) } else { setIsLiked(true); setUpvotes(v => v + 1) }}} startIcon={<ThumbUpOffAltIcon />}>
-                            Agree
+                    <Stack
+                        direction={{ xs: "column", sm: "row" }}
+                        spacing={1} 
+                        justifyContent="center"
+                        alignItems="center" 
+                    >
+                        {/*I know its wrong but I dont want to spend time fixing this right now, commit already way too big TODO */}
+                        <Button
+                            variant={(isLiked === null || !isLiked) ? "outlined" : "contained"}
+                            onClick={() => { if (isLiked === true) { setIsLiked(null); setUpvotes(v => v - 1) } else { setIsLiked(true); setUpvotes(v => v + 1) } }}
+                            startIcon={<ThumbUpOffAltIcon />}
+                            sx={{ width: { xs: '100%', sm: 'auto' } }} 
+                        >
+                            HODL
                         </Button>
-                        <Button variant={(isLiked === null || isLiked) ? "outlined" : "contained"} onClick={() => { if (isLiked === false) { setIsLiked(null); setDownvotes(v => v + 1) } else { setIsLiked(false); setDownvotes(v => v - 1) } }} startIcon={<ThumbDownOffAltIcon />}>
-                            Disagree
+                        <Button
+                            variant={(isLiked === null || isLiked) ? "outlined" : "contained"}
+                            onClick={() => { if (isLiked === false) { setIsLiked(null); setDownvotes(v => v + 1) } else { setIsLiked(false); setDownvotes(v => v - 1) } }}
+                            startIcon={<ThumbDownOffAltIcon />}
+                            sx={{ width: { xs: '100%', sm: 'auto' } }} 
+                        >
+                            SHORT
                         </Button>
                     </Stack>
-                    <Box sx={{ px: 2 }}>
+                    <Box sx={{ px: { xs: 1, sm: 2 } }}> 
                         <Typography variant="caption" color="textSecondary">
                             Community Sentiment
                         </Typography>
@@ -105,13 +129,19 @@ const FeaturedAdviceCard: React.FC<FeaturedAdviceCardProps> = ({ advice }) => {
                 </Stack>
 
 
-                <Stack direction="row" spacing={2} justifyContent="center" alignItems="center" mt={1}>
+                <Stack
+                    direction={{ xs: "column", sm: "row" }} 
+                    spacing={1} 
+                    justifyContent="center"
+                    alignItems="center" 
+                    mt={1}
+                >
                     <Chip label={advice.Class} color="primary" variant="outlined" />
                     <Chip
                         label={`Risk: ${advice["Risk Profile"]}`}
                         sx={{ backgroundColor: riskColor(advice["Risk Profile"]) }}
                     />
-                    <Box sx={{ width: 120 }}>
+                    <Box sx={{ width: { xs: '100%', sm: 120 } }}>
                         <Typography variant="caption" color="textSecondary">
                             Confidence
                         </Typography>
@@ -132,10 +162,10 @@ const FeaturedAdviceCard: React.FC<FeaturedAdviceCardProps> = ({ advice }) => {
                     </Box>
                 </Stack>
 
-                <Divider />
+                <Divider sx={{ my: 2 }} /> 
 
                 <Typography variant="subtitle1" fontWeight="bold">
-                    Amount to Invest/Sell:
+                    Change to Portfolio:
                 </Typography>
                 <Typography variant="body1" mb={2}>
                     {advice["Amount to Invest/Sell"] || "N/A"}
@@ -145,6 +175,7 @@ const FeaturedAdviceCard: React.FC<FeaturedAdviceCardProps> = ({ advice }) => {
                     size="small"
                     variant="outlined"
                     onClick={() => setShowRationale((prev) => !prev)}
+                    sx={{ width: { xs: '100%', sm: 'auto' } }} 
                 >
                     {showRationale ? "Hide Rationale" : "Show Rationale"}
                 </Button>
@@ -159,7 +190,7 @@ const FeaturedAdviceCard: React.FC<FeaturedAdviceCardProps> = ({ advice }) => {
 
                 {advice["Future Search Term"] && (
                     <>
-                        <Divider />
+                        <Divider sx={{ mt: 2 }} />
                         <Typography variant="subtitle1" fontWeight="bold" mt={1}>
                             Future Search Terms:
                         </Typography>
@@ -182,10 +213,9 @@ const FeaturedAdviceCard: React.FC<FeaturedAdviceCardProps> = ({ advice }) => {
                         </Typography>
                     </>
                 )}
-            </Stack>
-        </GlassCard>
-    </Box >
-  );
+            </GlassCard>
+        </Box >
+    );
 };
 
 export default FeaturedAdviceCard;
