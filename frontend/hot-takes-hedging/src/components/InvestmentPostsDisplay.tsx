@@ -20,6 +20,8 @@ interface InvestmentPostsDisplayProps {
     defaultIndex? : number // Default index for the first post
 }
 
+// TODO: Display post #
+
 const InvestmentPostsDisplay: React.FC<InvestmentPostsDisplayProps> = ({ posts, defaultIndex }) => {
     return (
         <Box sx={{ maxWidth: { xs: '95vw', md: 800, lg: 1000 }, m: "auto", p: { xs: 1, md: 2 } }}>
