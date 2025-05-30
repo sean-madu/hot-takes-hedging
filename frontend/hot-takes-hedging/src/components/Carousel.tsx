@@ -11,13 +11,19 @@ import { useSwipeable } from 'react-swipeable';
 
 type CarouselProps = {
     items: React.ReactNode[];
+    defaultIndex?: number;
 };
 
-const SwipeableCarousel: React.FC<CarouselProps> = ({ items }) => {
+const SwipeableCarousel: React.FC<CarouselProps> = ({ items, defaultIndex = 0 }) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-    const [currentIndex, setCurrentIndex] = useState(0);
+    const [currentIndex, setCurrentIndex] = useState(() => {
+        // Ensure defaultIndex is within bounds
+        return Math.max(0, Math.min(defaultIndex, items.length - 1));
+    });
+
+
     const [direction, setDirection] = useState<'left' | 'right'>('left');
 
     const handlePrev = () => {
@@ -40,79 +46,71 @@ const SwipeableCarousel: React.FC<CarouselProps> = ({ items }) => {
     });
 
     return (
-        <>
-            <Stack
-                direction="column"
-                alignItems="center"
-                justifyContent="center"
-                spacing={2}
+        <Stack
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+            spacing={2}
+            sx={{
+                width: '100%',
+                flexWrap: 'nowrap',
+                animation: 'height ease 0.3s',
+                p: { xs: 1, sm: 2 }
+            }}
+        >
+            <Box
+                {...swipeHandlers}
                 sx={{
                     width: '100%',
-                    flexWrap: 'nowrap',
-                    animation: 'height ease 0.3s',
-                    p: { xs: 1, sm: 2 }
+                    maxWidth: '100%',
+                    position: 'relative',
+                    overflowX: 'hidden',
+                    overflowY: 'auto',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: { xs: '70vh', sm: '85vh', md: '90vh' },
+                    p: { xs: 1, sm: 0 },
+                    '&::-webkit-scrollbar-track': {
+                        background: 'transparent',
+                    },
+                    scrollbarWidth: 'thin',
+                    scrollbarColor: 'rgba(0, 0, 0, 0.3) transparent',
                 }}
             >
-                <Box
-                    {...swipeHandlers}
-                    sx={{
-                        width: '100%',
-                        maxWidth: '100%',
-                        position: 'relative',
-                        overflowX: 'hidden',
-                        overflowY: 'auto',
-
-                        display: 'flex',
-                        flexDirection: 'column',
-                        height: { xs: '70vh', sm: '85vh' },
-                        p: { xs: 1, sm: 0 }, 
-
-                        // WebKit-based browsers (Chrome, Safari, Edge, newer Firefox)
-                        '&::-webkit-scrollbar-track': {
-                            background: 'transparent', // Make the scrollbar track invisible
-                        },
-
-                        // None webkits
-                        scrollbarWidth: 'thin', // 'auto' | 'thin' | 'none'
-                        scrollbarColor: 'rgba(0, 0, 0, 0.3) transparent', // thumb color track color
-
-                    }}
+                <Slide
+                    in
+                    direction={direction}
+                    key={currentIndex}
+                    mountOnEnter
+                    unmountOnExit
+                    timeout={400}
                 >
-                    <Slide
-                        in
-                        direction={direction}
-                        key={currentIndex}
-                        mountOnEnter
-                        unmountOnExit
-                        timeout={400}
+                    <Box
+                        sx={{
+                            width: '100%',
+                            position: 'relative',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            px: { xs: 2, sm: 0 }
+                        }}
                     >
-                        <Box
-                            sx={{
-                                width: '100%',
-                                position: 'relative',
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                px: { xs: 2, sm: 0 }
-                            }}
-                        >
-                            {items[currentIndex]}
-                        </Box>
-                    </Slide>
-                </Box>
-                <Pagination
-                    count={items.length}
-                    page={currentIndex + 1}
-                    onChange={(_, value) => {
-                        setCurrentIndex(value - 1);
-                    }}
-                    color="primary"
-                    shape="rounded"
-                    size={isMobile ? "medium" : "large"}
-                    sx={{ padding: 1 }}
-                />
-            </Stack>
-        </>
+                        {items[currentIndex]}
+                    </Box>
+                </Slide>
+            </Box>
+            <Pagination
+                count={items.length}
+                page={currentIndex + 1}
+                onChange={(_, value) => {
+                    setCurrentIndex(value - 1);
+                }}
+                color="primary"
+                shape="rounded"
+                size={isMobile ? "medium" : "large"}
+                sx={{ padding: 1 }}
+            />
+        </Stack>
     );
 };
 

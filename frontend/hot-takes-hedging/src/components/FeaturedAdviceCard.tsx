@@ -17,6 +17,8 @@ import ShareRow from "./ShareRow";
 
 type FeaturedAdviceCardProps = {
     advice: InvestmentAdviceItem;
+    postID: string,
+    pageNum: string
 };
 
 const recommendationColor = (rec: string) => {
@@ -25,6 +27,8 @@ const recommendationColor = (rec: string) => {
             return "success.main";
         case "SELL":
             return "error.main";
+        case "SHORT":
+            return "error.light"
         case "HOLD":
             return "warning.main";
         case "WATCH":
@@ -48,7 +52,7 @@ const riskColor = (risk: string) => {
 };
 
 
-const FeaturedAdviceCard: React.FC<FeaturedAdviceCardProps> = ({ advice }) => {
+const FeaturedAdviceCard: React.FC<FeaturedAdviceCardProps> = ({ advice, postID, pageNum }) => {
     const [showRationale, setShowRationale] = useState(true);
 
     // Mock user feedback vote state, TODO: Implement toggle once this is actually coded
@@ -169,7 +173,7 @@ const FeaturedAdviceCard: React.FC<FeaturedAdviceCardProps> = ({ advice }) => {
                     Change to Portfolio:
                 </Typography>
                 <Typography variant="body1" mb={2}>
-                    {advice["Amount to Invest/Sell"] || "N/A"}
+                    {advice['Change to Portfolio'] || "N/A"}
                 </Typography>
 
                 <Button
@@ -215,8 +219,8 @@ const FeaturedAdviceCard: React.FC<FeaturedAdviceCardProps> = ({ advice }) => {
                     </>
                 )}
             </GlassCard>
-            {/*// TODO: Make this better with sharing a specific one once we have the backend working */}
-            <ShareRow url="google.com" title={`AI thinks you should ${advice['Strategic Recommendation']} ${advice['Ticker Symbol/Asset Name']}`}/>
+            {/*// TODO: Update to PROD URL*/}
+            <ShareRow url={`http://localhost:5173/post/${postID}/${pageNum}`} title={`AI thinks you should ${advice['Strategic Recommendation']} ${advice['Ticker Symbol/Asset Name']}`}/>
         </Stack>
     );
 };
