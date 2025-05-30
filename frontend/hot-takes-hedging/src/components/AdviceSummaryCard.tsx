@@ -60,7 +60,7 @@ const AdviceSummaryCard: React.FC<AdviceSummaryCardProps> = ({
                             {advice["Strategic Recommendation"]}
                         </Typography>
                         <Divider />
-                        {advice["Amount to Invest/Sell"] &&
+                        {advice['Change to Portfolio'] &&
                             <Typography
                                 variant="subtitle2"
                                 color='success'
@@ -69,7 +69,7 @@ const AdviceSummaryCard: React.FC<AdviceSummaryCardProps> = ({
                                     opacity: 0.7,
                                 }}
                             >
-                                {advice["Amount to Invest/Sell"]}
+                                {advice['Change to Portfolio']}
                             </Typography>}
                     </Stack>
 
