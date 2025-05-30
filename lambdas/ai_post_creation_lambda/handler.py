@@ -231,8 +231,8 @@ def lambda_handler(event, context):
         last_hex_id = latest_info.get("currentHexID", "0")
         previous_terms = latest_info.get("searchTerms", [])
     except s3.exceptions.NoSuchKey:
-        # First run: start from 0
-        last_hex_id = "0"
+        # First run: start from -1 so the first search is 0
+        last_hex_id = "-1"
         previous_terms = []
 
     # Step 2: Generate next hex ID
