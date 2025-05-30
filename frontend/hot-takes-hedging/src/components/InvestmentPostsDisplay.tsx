@@ -21,7 +21,6 @@ interface InvestmentPostsDisplayProps {
 }
 
 // TODO: Display post #
-
 const InvestmentPostsDisplay: React.FC<InvestmentPostsDisplayProps> = ({ posts, defaultIndex }) => {
     return (
         <Box sx={{ maxWidth: { xs: '95vw', md: 800, lg: 1000 }, m: "auto", p: { xs: 1, md: 2 } }}>
@@ -35,9 +34,10 @@ const InvestmentPostsDisplay: React.FC<InvestmentPostsDisplayProps> = ({ posts, 
                                 <FeaturedAdviceCard key={cardIndex} advice={item} postID={hexId} pageNum={`${cardIndex}`}  />
                             ))
                             : [];
+                        const intId = parseInt(hexId, 16)
 
                         const first = index === 0
-
+                        
                         return (
                             <div key={index}>
                                 <Stack
@@ -48,6 +48,7 @@ const InvestmentPostsDisplay: React.FC<InvestmentPostsDisplayProps> = ({ posts, 
                                         p: { md: 1, lg: 2 },
                                     }}
                                 >
+                                    <Typography m={2} >POST #{intId + 1}</Typography>
                                     <Box
                                         sx={{
                                             p: { xs: 2, md: 3 },

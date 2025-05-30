@@ -38,6 +38,9 @@ const About: React.FC = () => {
           >
             TL;DR: None of the content you see here is human reviewed or approved. It's algorithmic, speculative, and purely for entertainment or curiosity. You’ve been warned.
           </Typography>
+          <Typography variant="body1" fontWeight="bold">
+            Nothing on this website constitutes a recommendation, endorsement, or strategy for any actual investment. By using this site, you acknowledge that any actions you take are entirely at your own risk and that you understand this is a parody project.
+          </Typography>
 
           <Typography variant="h5" gutterBottom sx={{ mt: 4 }}>
             So What <strong>Is</strong> This?
@@ -56,9 +59,14 @@ const About: React.FC = () => {
               Take me back
             </Button>
           </Stack>
+          
         </GlassCard>
 
       </Box>
+      <Typography variant="body2" fontStyle="italic" color="gray" textAlign={'center'}>
+        Any resemblance to sound financial strategy — living or dead — is purely coincidental.
+      </Typography>
+
     </>
 
   );

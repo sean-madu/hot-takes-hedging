@@ -24,7 +24,7 @@ export const fetchLatestAdvice = async (): Promise<InvestmentAdvicePosts> => {
 
 /**
  * Fetches a count many posts starting from startId
- * @param startId The starting ID of posts to retrieve.
+ * @param startId The hex starting ID of posts to retrieve.
  * @param count The number of posts to retrieve.
  * @returns Promise<InvestmentAdvicePosts>
  */

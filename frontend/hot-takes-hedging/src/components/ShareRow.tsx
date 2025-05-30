@@ -35,8 +35,8 @@ const ShareRow : React.FC<ShareRowProps> = ({url, title}) => {
 
   return (
     <Box display="flex" alignItems="center" gap={1} mt={2}>
-      <Typography variant="body1" sx={{ mr: 1 }}>
-        Share:
+      <Typography variant="body1" sx={{ mr: 1 }} fontSize={'0.9rem'}>
+        Share This Horrid Advice:
       </Typography>
       <Tooltip title="Share on Twitter">
         <IconButton component="a" href={shareLinks.twitter} target="_blank" rel="noopener noreferrer">
