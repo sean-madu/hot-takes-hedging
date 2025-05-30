@@ -34,6 +34,7 @@ Run `./package.ps1` to generate `.zip` files for all lambdas or `./package.ps1 -
 ---
 
 ## 🚧 Future Upgrades (for me or you!)
+* Doing all the TODOs in the code 
 *  Use python or something other than .ps1 script for making lambda, or maybe just a better system in general when you do CI/CD
 *  CI/CD pipeline setup
 *  Community voting for future research topics
