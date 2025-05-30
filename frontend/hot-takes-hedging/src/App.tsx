@@ -8,12 +8,11 @@ import About from './pages/About';
 import NotFound from './pages/NotFound';
 import Post from './pages/Post';
 import TermsOfService from './pages/TermsOfService';
+import Privacy from './pages/Privacy';
 
 // Components
 import ThemeToggleButton from './components/ThemeSwitchButton';
 import NavigationBar from './components/NavigationBar';
-
-// MUI
 
 const App: React.FC = () => {
   return (
@@ -23,6 +22,7 @@ const App: React.FC = () => {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/tos" element={<TermsOfService />} />
+        <Route path="/privacy" element={<Privacy />} />
         <Route path="/post/:id/:index?" element={<Post />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

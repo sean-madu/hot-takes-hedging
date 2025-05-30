@@ -19,7 +19,7 @@ Then uses AI to recommend investment actions based on the news (please do **NOT*
 
 ## Tech used, in case a recruiter is watching :)
 
-* AWS Lambda & S3 & API Gateway (though you can't see it here)
+* AWS Lambda, S3, API Gateway & Event Scheduler(though you can't see it here)
 * REST APIs
 * React + Typescript
 * Scripting

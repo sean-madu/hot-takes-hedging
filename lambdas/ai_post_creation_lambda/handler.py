@@ -29,6 +29,8 @@ def fetch_news_articles(topics=[]):
     LANGUAGE = 'en' # Not strictly needed for the AI but aiming for an english audience
     LIMIT = 3 # Max per request on free plan
     API_TOKEN = os.environ.get("NEWS_API_KEY") 
+    # TODO: Split this up into two queries so we can get more articles. It still fits into 
+    # our request API Limit of 100 a day
     DEFAULT_CATEGORIES = ','.join(['politics', 'business'])   
     
     conn = http.client.HTTPSConnection('api.thenewsapi.com')

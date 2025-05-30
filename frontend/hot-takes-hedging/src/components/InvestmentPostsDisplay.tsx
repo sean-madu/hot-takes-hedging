@@ -20,7 +20,6 @@ interface InvestmentPostsDisplayProps {
     defaultIndex? : number // Default index for the first post
 }
 
-// TODO: Display post #
 const InvestmentPostsDisplay: React.FC<InvestmentPostsDisplayProps> = ({ posts, defaultIndex }) => {
     return (
         <Box sx={{ maxWidth: { xs: '95vw', md: 800, lg: 1000 }, m: "auto", p: { xs: 1, md: 2 } }}>
@@ -39,7 +38,7 @@ const InvestmentPostsDisplay: React.FC<InvestmentPostsDisplayProps> = ({ posts, 
                         const first = index === 0
                         
                         return (
-                            <div key={index}>
+                            <Box key={index}>
                                 <Stack
                                     border={1}
                                     borderColor="divider"
@@ -99,7 +98,7 @@ const InvestmentPostsDisplay: React.FC<InvestmentPostsDisplayProps> = ({ posts, 
                                     </Box>
                                     {adviceCards.length > 0 && (first ? <SwipeableCarousel defaultIndex={defaultIndex} items={adviceCards}/> : <SwipeableCarousel items={adviceCards}/>) }
                                 </Stack>
-                            </div>
+                            </Box>
                         );
                     })}
                 </Stack>
