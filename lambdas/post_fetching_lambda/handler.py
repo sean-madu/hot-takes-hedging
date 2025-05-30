@@ -23,7 +23,7 @@ def lambda_handler(event, context):
 
     if http_method == 'GET' and path == '/refresh':
         return get_latest_and_five(s3, bucket_name, folder_prefix)
-    elif http_method == 'GET' and path == '/posts':
+    elif http_method == 'GET' and path == '/post':
         return get_paginated_posts(s3, bucket_name, folder_prefix, query_string_parameters)
     else:
         return {
