@@ -17,19 +17,18 @@ Uses [TheNewsAPI](https://www.thenewsapi.com/) to periodically pull headlines an
 * **Business**
 * **Past topics of interest**
 
-Then uses AI to recommend investment actions (please do NOT follow them, it is meant as a showcase of how BAD it can be, not as financial advice) based on the news
+Then uses AI to recommend investment actions based on the news (please do **NOT** follow them, it is meant as a showcase of how **BAD** it can be, not as financial advice)
 
 ---
 
 ## 📦 Build & Run Instructions
 
-Lambda function code is located in `/lambda/handler.py`.
-Use `package.ps1` to generate a `.zip` ready to upload to AWS Lambda.
+Run `./package.ps1` to generate `.zip` files for all lambdas or `./package.ps1 -FoldersToBuild foo, bar` to generate a `.zip` for each folder specified, upload these to AWS Lambda.
 
 ---
 
 ## 🚧 Future Upgrades (for me or you!)
-
+*  Use python or something other than .ps1 script for making lambda, or maybe just a better system in general when you do CI/CD
 *  CI/CD pipeline setup
 *  Community voting for future research topics
 *  Comment section or user-generated prompts
