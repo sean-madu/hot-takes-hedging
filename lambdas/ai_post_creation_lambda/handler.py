@@ -255,7 +255,8 @@ def lambda_handler(event, context):
     output_data = {
         "articles": news_articles,
         "timestamp": timestamp,
-        "Investment Advice": generated_advice['advice'].get("Investment Advice", [])
+        "Investment Advice": generated_advice['advice'].get("Investment Advice", []),
+        "hex ID": next_hex_id
     }
 
     # Step 5: Save the versioned advice file
@@ -279,7 +280,7 @@ def lambda_handler(event, context):
     # Step 7: Combine search terms and save updated search info
     future_search_terms = left_over_search_terms + generated_advice['searchTerms']
     next_search_info = {
-        "currentHexID": next_hex_id,
+        "currentHexID": next_hex_id, #Not really needed anymore but leaving it bc I am way to lazy to remove #TODO
         "searchTerms": future_search_terms
     }
 
