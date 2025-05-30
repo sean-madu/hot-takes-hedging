@@ -3,21 +3,30 @@ import { useQuery } from '@tanstack/react-query';
 
 import { fetchLatestAdvice } from '../api'; 
 
-import { Typography, Alert, Box, Link, Stack} from '@mui/material';
+import {
+    Typography,
+    Alert,
+    Box,
+    Link,
+    Stack,
+    CircularProgress,
+} from '@mui/material';
 
 import InvestmentPostsDisplay from '../components/InvestmentPostsDisplay';
 import SummaryTicker from '../components/SummaryTicker';
 
 // TODO: Add a nice gradient so the glasst effect looks better
 const Home: React.FC = () => {
-
-    const returnData = useQuery({
+    const {
+        data: advice,
+        isLoading,
+        isError,
+        error,
+    } = useQuery({
         queryKey: ['latestAdvice'],
         queryFn: fetchLatestAdvice, 
         staleTime: Infinity,
     });
-
-    const advice = returnData.data // TODO: Error checking, and loading
 
     return (
         <>
@@ -49,26 +58,31 @@ const Home: React.FC = () => {
                     .
                     Take it more as an exercise to see how many things you can spot wrong
                 </Alert>
-
             </Box>
-            {
-                advice && advice.length > 0 ? 
+
+            {isLoading ? (
+                <Box display="flex" justifyContent="center" mt={4}>
+                    <CircularProgress />
+                </Box>
+            ) : isError ? (
+                <Alert severity="error" sx={{ m: 2 }}>
+                    Failed to load the latest advice: {error instanceof Error ? error.message : 'Unknown error'}
+                </Alert>
+            ) : advice && advice.length > 0 ? (
+                <>
                     <Stack alignItems={'center'} width={'100vw'} spacing={1}>
-                        <Typography sx={{ fontSize: { xs: '0.8rem', md: '1rem' } }}> LAST UPDATE AT A GLANCE | NEXT UPDATE IN 00:30</Typography>
-                        <SummaryTicker advice={advice[0]['Investment Advice']} speed={80}/>
-                    </Stack> :
-                    <Typography textAlign="center" color="textSecondary">
-                        Latest Advice not found. Something might have gone wrong
-                    </Typography>
-            }
-
-            {
-                advice ? <InvestmentPostsDisplay posts={advice} /> :
-                    <Typography textAlign="center" color="textSecondary">
-                        Something went wrong, could not get Insights
-                    </Typography>
-            }
-
+                        <Typography sx={{ fontSize: { xs: '0.8rem', md: '1rem' } }}>
+                            LAST UPDATE AT A GLANCE | NEXT UPDATE IN 00:30
+                        </Typography>
+                        <SummaryTicker advice={advice[0]['Investment Advice']} speed={80} />
+                    </Stack>
+                    <InvestmentPostsDisplay posts={advice} />
+                </>
+            ) : (
+                <Typography textAlign="center" color="textSecondary">
+                    Latest Advice not found. Something might have gone wrong.
+                </Typography>
+            )}
         </>
 
     );
