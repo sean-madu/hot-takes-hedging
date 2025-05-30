@@ -2,12 +2,6 @@
 
 **A Satirical ✨*Agentic AI*✨ Powered Investment Advice Site**
 
-A joke project that doubles as a showcase of using:
-
-* AWS Lambda & S3
-* REST APIs
-* React + Typescript
-
 ---
 
 ## What It Does
@@ -19,6 +13,17 @@ Uses [TheNewsAPI](https://www.thenewsapi.com/) to periodically pull headlines an
 * **Past topics of interest**
 
 Then uses AI to recommend investment actions based on the news (please do **NOT** follow them, it is meant as a showcase of how **BAD** it can be, not as financial advice)
+
+---
+
+
+## Tech used, in case a recruiter is watching :)
+
+* AWS Lambda & S3 & API Gateway (though you can't see it here)
+* REST APIs
+* React + Typescript
+* Scripting
+* Docker
 
 ---
 
