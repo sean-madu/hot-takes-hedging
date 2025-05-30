@@ -6,6 +6,7 @@ A joke project that doubles as a showcase of using:
 
 * AWS Lambda & S3
 * REST APIs
+* React + Typescript
 
 ---
 
