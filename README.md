@@ -17,7 +17,7 @@ Uses [TheNewsAPI](https://www.thenewsapi.com/) to periodically pull headlines an
 * **Business**
 * **Past topics of interest**
 
-Then uses AI to recommend investment actions based on the news
+Then uses AI to recommend investment actions (please do NOT follow them, it is meant as a showcase of how BAD it can be, not as financial advice) based on the news
 
 ---
 
