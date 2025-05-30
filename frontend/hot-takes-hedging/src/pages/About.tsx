@@ -3,6 +3,7 @@ import React from 'react';
 import { Typography, Box, Stack, Divider, Button } from '@mui/material';
 import GlassCard from '../components/GlassCard';
 
+// TODO: Add in git repo and also my socials
 const About: React.FC = () => {
   return (
     <>
