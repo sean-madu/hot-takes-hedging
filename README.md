@@ -1,3 +1,6 @@
+# I gave up on this project because it is probably illegal and I dont want to take that chance, but I'll keep it up incase anyone is interested
+---
+
 # 📉 Hot Takes Hedging
 
 **A Satirical ✨*Agentic AI*✨ Powered Investment Advice Site**
